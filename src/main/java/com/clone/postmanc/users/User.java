@@ -1,17 +1,18 @@
 package com.clone.postmanc.users;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.clone.postmanc.users.role.Role;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +42,12 @@ public class User implements UserDetails {
   private boolean credentialsNonExpired;
 
   private boolean enabled;
+
+  @CreationTimestamp
+  private LocalDateTime creation;
+
+  @UpdateTimestamp
+  private LocalDateTime update;
 
   public User() {
 
