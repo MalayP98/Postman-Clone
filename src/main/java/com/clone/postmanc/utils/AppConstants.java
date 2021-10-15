@@ -11,8 +11,8 @@ public final class AppConstants {
   }
 
   // Role Constants
-  public final static String USER = "ROLE_USER";
-  public final static String ADMIN = "ROLE_ADMIN";
+  public final static String USER = "USER";
+  public final static String ADMIN = "ADMIN";
   public final static List<Role> ROLES =
       Collections.unmodifiableList(Arrays.asList(new Role(USER), new Role(ADMIN)));
   public final static String[] ALL_ROLES = {USER, ADMIN};
