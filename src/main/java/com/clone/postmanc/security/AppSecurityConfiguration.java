@@ -1,6 +1,7 @@
 package com.clone.postmanc.security;
 
 import com.clone.postmanc.users.UserService;
+import com.clone.postmanc.utils.AppConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,14 +26,13 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
       throws Exception {
-    authenticationManagerBuilder.inMemoryAuthentication().withUser("test").password("pass")
-        .roles("ADMIN");
     authenticationManagerBuilder.userDetailsService(userService);
   }
 
   @Override
   public void configure(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity.authorizeRequests().anyRequest().hasAnyRole("USER", "ADMIN");
+    httpSecurity.authorizeRequests().antMatchers(AppConstants.PUBLIC_URLS).permitAll();
+    httpSecurity.authorizeRequests().anyRequest().hasAnyRole(AppConstants.ALL_ROLES);
     httpSecurity.formLogin().disable();
     httpSecurity.httpBasic();
     httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
