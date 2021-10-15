@@ -31,7 +31,7 @@ public class User implements UserDetails {
   @NonNull
   private String password;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne
   private Role role;
 
   private boolean accountNonExpired;
@@ -46,11 +46,11 @@ public class User implements UserDetails {
 
   }
 
-  public User(UserDTO userDTO) {
-    this.name = userDTO.getName();
-    this.username = userDTO.getUsername();
-    this.password = userDTO.getPassword();
-    this.role = userDTO.getRole();
+  public User(SignupRequest signupRequest) {
+    this.name = signupRequest.getName();
+    this.username = signupRequest.getUsername();
+    this.password = signupRequest.getPassword();
+    this.role = signupRequest.getRole();
     this.accountNonExpired = true;
     this.accountNonLocked = true;
     this.credentialsNonExpired = true;
