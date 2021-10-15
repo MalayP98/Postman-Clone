@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -20,19 +20,20 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Bean
   public PasswordEncoder defaultPasswordEncoder() {
-    return NoOpPasswordEncoder.getInstance();
+    return new BCryptPasswordEncoder();
   }
 
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
       throws Exception {
-    authenticationManagerBuilder.userDetailsService(userService);
+    authenticationManagerBuilder.userDetailsService(userService)
+        .passwordEncoder(defaultPasswordEncoder());
   }
 
   @Override
   public void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.authorizeRequests().antMatchers(AppConstants.PUBLIC_URLS).permitAll();
-    httpSecurity.authorizeRequests().anyRequest().hasAnyRole(AppConstants.ALL_ROLES);
+    httpSecurity.authorizeRequests().anyRequest().hasAnyAuthority(AppConstants.ALL_ROLES);
     httpSecurity.formLogin().disable();
     httpSecurity.httpBasic();
     httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
