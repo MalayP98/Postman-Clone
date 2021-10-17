@@ -22,6 +22,7 @@ public final class AppConstants {
   public final static String USER_URL = "/user";
   public final static String ADD_URL = "/add";
   public final static String SIGNUP_URL = "/signup";
+  public final static String DEACTIVATE_URL = "/deactivate";
 
   // date format
   public final static String DATE_FORMAT = "dd/MM/yyyy";
@@ -39,5 +40,6 @@ public final class AppConstants {
   public final static String PASSWORD_NOT_MATCHED = "Password not matched.";
   public final static String USERNAME_ALREADY_EXIST = "Username already exist. Try to log in.";
   public final static String SIGNED_UP = "Sign up successfull.";
-
+  public final static String ACCOUNT_NOT_FOUND = "Account not found.";
+  public final static String ACCOUNT_DEACTIVATED = "Account deactivated.";
 }
