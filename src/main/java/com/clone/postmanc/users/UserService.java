@@ -6,6 +6,8 @@ import com.clone.postmanc.utils.AppConstants;
 import com.clone.postmanc.utils.Helpers;
 import com.clone.postmanc.utils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,5 +48,16 @@ public class UserService implements UserDetailsService {
       return new Message(AppConstants.SIGNED_UP);
     }
     return verification;
+  }
+
+  public Message deactivateUser() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    User user = (User) authentication.getPrincipal();
+    if (Objects.nonNull(user)) {
+      user.setEnabled(false);
+      userRepository.save(user);
+      return new Message(AppConstants.ACCOUNT_DEACTIVATED);
+    }
+    return new Message(AppConstants.ACCOUNT_NOT_FOUND);
   }
 }

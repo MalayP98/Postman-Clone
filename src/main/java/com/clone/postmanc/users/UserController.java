@@ -6,6 +6,7 @@ import com.clone.postmanc.utils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,5 +23,10 @@ public class UserController {
   @PostMapping(path = AppConstants.SIGNUP_URL)
   public ResponseEntity<Message> signup(@Valid @RequestBody SignupRequest signupRequest) {
     return new ResponseEntity<>(userService.addUser(signupRequest), HttpStatus.CREATED);
+  }
+
+  @DeleteMapping(path = AppConstants.DEACTIVATE_URL)
+  public ResponseEntity<Message> deactivate() {
+    return new ResponseEntity<>(userService.deactivateUser(), HttpStatus.OK);
   }
 }
