@@ -31,9 +31,6 @@ public class UserService implements UserDetailsService {
   @Autowired
   private Helpers helpers;
 
-  @Autowired
-  private PasswordEncoder encoder;
-
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return (UserDetails) userRepository.findByUsername(username);
@@ -46,11 +43,11 @@ public class UserService implements UserDetailsService {
       if (!Objects.nonNull(signupRequest.getName())) {
         signupRequest.setName(helpers.getRondomString());
       }
+      // TODO : create an environment variable with name DEFAULT_ROLE and use it here.
       signupRequest.setRole(roleRepository.findByAuthority(AppConstants.USER));
-      signupRequest.setPassword(encoder.encode(signupRequest.getPassword()));
       User user = new User(signupRequest);
       user = userRepository.save(user);
-      LOG.info("User add with id = " + user.getId());
+      LOG.info("User add with id = " + user.getId() + " default role USER");
       return new Message(AppConstants.SIGNED_UP);
     }
     return verification;
