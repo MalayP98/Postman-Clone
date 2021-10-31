@@ -10,6 +10,9 @@ public final class AppConstants {
   private AppConstants() {
   }
 
+  // Secret
+  public final static String SECRET = "AoFLSfi7hsW0aqv7";
+
   // Role Constants
   public final static String USER = "USER";
   public final static String ADMIN = "ADMIN";
@@ -27,7 +30,7 @@ public final class AppConstants {
   // date format
   public final static String DATE_FORMAT = "dd/MM/yyyy";
 
-  // Characters
+  // Symbols
   public final static String AT = "@";
   public final static String PERIOD = ".";
   public final static String HYPHEN = "-";
