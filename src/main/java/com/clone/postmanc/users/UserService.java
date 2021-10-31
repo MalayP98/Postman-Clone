@@ -1,12 +1,6 @@
 package com.clone.postmanc.users;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import com.clone.postmanc.users.exceptions.SignupException;
 import com.clone.postmanc.users.role.RoleRepository;
 import com.clone.postmanc.utils.AppConstants;
