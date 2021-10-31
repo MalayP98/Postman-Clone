@@ -1,15 +1,23 @@
 package com.clone.postmanc.users;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.clone.postmanc.security.Encoders;
+import com.clone.postmanc.users.exceptions.SignupException;
 import com.clone.postmanc.users.role.Role;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -53,10 +61,14 @@ public class User implements UserDetails {
 
   }
 
-  public User(SignupRequest signupRequest) {
+  public User(SignupRequest signupRequest) throws SignupException {
     this.name = signupRequest.getName();
     this.username = signupRequest.getUsername();
-    this.password = signupRequest.getPassword();
+    try {
+      this.password = Encoders.encode(Encoders.decode(signupRequest.getPassword()));
+    } catch (Exception e) {
+      throw new SignupException("Error while encrypting password");
+    }
     this.role = signupRequest.getRole();
     this.accountNonExpired = true;
     this.accountNonLocked = true;

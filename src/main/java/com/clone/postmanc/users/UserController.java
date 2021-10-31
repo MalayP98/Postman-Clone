@@ -1,6 +1,13 @@
 package com.clone.postmanc.users;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.validation.Valid;
+import com.clone.postmanc.users.exceptions.SignupException;
 import com.clone.postmanc.utils.AppConstants;
 import com.clone.postmanc.utils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +28,8 @@ public class UserController {
   private UserService userService;
 
   @PostMapping(path = AppConstants.SIGNUP_URL)
-  public ResponseEntity<Message> signup(@Valid @RequestBody SignupRequest signupRequest) {
+  public ResponseEntity<Message> signup(@Valid @RequestBody SignupRequest signupRequest)
+      throws SignupException {
     return new ResponseEntity<>(userService.addUser(signupRequest), HttpStatus.CREATED);
   }
 

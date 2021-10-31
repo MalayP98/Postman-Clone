@@ -1,6 +1,13 @@
 package com.clone.postmanc.users;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import com.clone.postmanc.users.exceptions.SignupException;
 import com.clone.postmanc.users.role.RoleRepository;
 import com.clone.postmanc.utils.AppConstants;
 import com.clone.postmanc.utils.Helpers;
@@ -13,7 +20,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +42,9 @@ public class UserService implements UserDetailsService {
     return (UserDetails) userRepository.findByUsername(username);
   }
 
-  @Transactional
-  public Message addUser(SignupRequest signupRequest) {
-    Message verification = helpers.verifyUser(signupRequest);
+  @Transactional(rollbackFor = SignupException.class)
+  public Message addUser(SignupRequest signupRequest) throws SignupException {
+    Message verification = verifyUser(signupRequest);
     if (!Objects.nonNull(verification)) {
       if (!Objects.nonNull(signupRequest.getName())) {
         signupRequest.setName(helpers.getRondomString());
@@ -51,6 +57,16 @@ public class UserService implements UserDetailsService {
       return new Message(AppConstants.SIGNED_UP);
     }
     return verification;
+  }
+
+  public Message verifyUser(SignupRequest signupRequest) {
+    if (!signupRequest.getPassword().equals(signupRequest.getConfirmPassword())) {
+      return new Message(AppConstants.PASSWORD_NOT_MATCHED);
+    }
+    if (userRepository.existsByUsername(signupRequest.getUsername())) {
+      return new Message(AppConstants.USERNAME_ALREADY_EXIST);
+    }
+    return null;
   }
 
   @Transactional
