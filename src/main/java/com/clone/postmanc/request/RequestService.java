@@ -31,10 +31,10 @@ public class RequestService {
       }
     };
     ct.start();
-    send();
+    send(new ImmutableRequest(request));
   }
 
-  public void send() {
+  public void send(ImmutableRequest request) {
     System.out.println("\n\n sending request at " + LocalTime.now());
   }
 
