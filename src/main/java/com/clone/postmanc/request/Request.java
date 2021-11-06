@@ -24,6 +24,7 @@ public class Request extends ImmutableRequest {
   }
 
   public Request(IncomingRequest incomingRequest) throws JSONException, NotFoundException {
+    this.method = incomingRequest.getMethod();
     this.endpoint = incomingRequest.getEndpoint();
     this.authentication = (new AuthenticationDelegator(incomingRequest.getAuthType(),
         incomingRequest.getAuthenticationDetail())).getAuthentication();

@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class IncomingRequest {
 
+  private RequestMethod method;
+
   private String endpoint;
 
   private String authroization;
@@ -20,10 +22,10 @@ public class IncomingRequest {
 
   private BodyType bodyType;
 
-  private Map<String, Object> headers;
+  private Map<String, String> headers;
 
   @JsonIgnore
-  private Map<String, String> queryParam;
+  private Map<String, Object> queryParam;
 
   private String body;
 
@@ -37,9 +39,13 @@ public class IncomingRequest {
 
   public void setEndpoint(String endpoint) {
     int index = endpoint.indexOf(AppConstants.QUESTION_MARK);
-    this.endpoint = endpoint.substring(0, index);
-    setQueryParam(Helpers.stringToMap(endpoint.substring(index + 1), AppConstants.EQUALS,
-        AppConstants.AMPERSAND));
+    if (index > -1) {
+      this.endpoint = endpoint.substring(0, index);
+      setQueryParam(Helpers.stringToMap(endpoint.substring(index + 1), AppConstants.EQUALS,
+          AppConstants.AMPERSAND));
+    } else {
+      this.endpoint = endpoint;
+    }
   }
 
   public String getAuthroization() {
@@ -66,19 +72,19 @@ public class IncomingRequest {
     this.bodyType = bodyType;
   }
 
-  public Map<String, Object> getHeaders() {
+  public Map<String, String> getHeaders() {
     return headers;
   }
 
-  public void setHeaders(Map<String, Object> headers) {
+  public void setHeaders(Map<String, String> headers) {
     this.headers = headers;
   }
 
-  public Map<String, String> getQueryParam() {
+  public Map<String, Object> getQueryParam() {
     return queryParam;
   }
 
-  public void setQueryParam(Map<String, String> queryParam) {
+  public void setQueryParam(Map<String, Object> queryParam) {
     this.queryParam = queryParam;
   }
 
@@ -96,6 +102,14 @@ public class IncomingRequest {
 
   public void setAuthenticationDetail(JsonNode authenticationDetail) {
     this.authenticationDetail = authenticationDetail;
+  }
+
+  public RequestMethod getMethod() {
+    return method;
+  }
+
+  public void setMethod(RequestMethod method) {
+    this.method = method;
   }
 
   public Long getUserId() {

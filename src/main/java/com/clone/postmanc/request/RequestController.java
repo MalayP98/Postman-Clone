@@ -1,6 +1,7 @@
 package com.clone.postmanc.request;
 
 import com.clone.postmanc.utils.AppConstants;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class RequestController {
 
   @PostMapping(value = AppConstants.SEND)
   public IncomingRequest send(@RequestBody IncomingRequest incomingRequest)
-      throws JSONException, NotFoundException {
+      throws JSONException, NotFoundException, UnirestException {
     requestService.runRequest(incomingRequest);
     return incomingRequest;
   }

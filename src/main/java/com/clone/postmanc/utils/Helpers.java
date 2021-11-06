@@ -17,9 +17,9 @@ public class Helpers {
     return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
 
-  public static Map<String, String> stringToMap(String str, String keyValueSeprator,
+  public static Map<String, Object> stringToMap(String str, String keyValueSeprator,
       String elementSeprator) {
-    Map<String, String> result = new HashMap<>();
+    Map<String, Object> result = new HashMap<>();
     for (String element : str.split(elementSeprator)) {
       String[] pair = element.split(keyValueSeprator);
       result.put(pair[0], pair[1]);

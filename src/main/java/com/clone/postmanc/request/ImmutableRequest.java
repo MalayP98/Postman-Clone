@@ -9,15 +9,18 @@ import org.springframework.lang.NonNull;
 public class ImmutableRequest {
 
   @NonNull
+  protected RequestMethod method;
+
+  @NonNull
   protected String endpoint;
 
   protected String authentication;
 
   @Convert(converter = MapToJsonConverter.class)
-  protected Map<String, Object> headers;
+  protected Map<String, String> headers;
 
   @Convert(converter = MapToJsonConverter.class)
-  protected Map<String, String> queryParam;
+  protected Map<String, Object> queryParam;
 
   protected String body;
 
@@ -26,6 +29,7 @@ public class ImmutableRequest {
   }
 
   public ImmutableRequest(Request request) {
+    this.method = request.getMethod();
     this.endpoint = request.getEndpoint();
     this.authentication = request.getAuthentication();
     this.headers = request.getHeaders();
@@ -49,19 +53,19 @@ public class ImmutableRequest {
     this.authentication = authentication;
   }
 
-  public Map<String, Object> getHeaders() {
+  public Map<String, String> getHeaders() {
     return headers;
   }
 
-  protected void setHeaders(Map<String, Object> headers) {
+  protected void setHeaders(Map<String, String> headers) {
     this.headers = headers;
   }
 
-  public Map<String, String> getQueryParam() {
+  public Map<String, Object> getQueryParam() {
     return queryParam;
   }
 
-  protected void setQueryParam(Map<String, String> queryParam) {
+  protected void setQueryParam(Map<String, Object> queryParam) {
     this.queryParam = queryParam;
   }
 
@@ -71,5 +75,13 @@ public class ImmutableRequest {
 
   protected void setBody(String body) {
     this.body = body;
+  }
+
+  public RequestMethod getMethod() {
+    return method;
+  }
+
+  protected void setMethod(RequestMethod method) {
+    this.method = method;
   }
 }
