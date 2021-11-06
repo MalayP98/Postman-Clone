@@ -23,6 +23,8 @@ public final class AppConstants {
   // URL
   public final static String API_URL = "/api";
   public final static String USER_URL = "/user";
+  public final static String REQUEST = "/request";
+  public final static String SEND = "/send";
   public final static String ADD_URL = "/add";
   public final static String SIGNUP_URL = "/signup";
   public final static String DEACTIVATE_URL = "/deactivate";
@@ -32,9 +34,14 @@ public final class AppConstants {
 
   // Symbols
   public final static String AT = "@";
+  public final static String EQUALS = "=";
   public final static String PERIOD = ".";
   public final static String HYPHEN = "-";
   public final static String EMPTY_STRING = "";
+  public final static String COLON = ":";
+  public static final String SPACE = " ";
+  public static final String QUESTION_MARK = "?";
+  public static final String AMPERSAND = "&";
 
   // list of URLs that can be accessed by anyone.
   public final static String[] PUBLIC_URLS = {API_URL + USER_URL + SIGNUP_URL};
@@ -45,4 +52,7 @@ public final class AppConstants {
   public final static String SIGNED_UP = "Sign up successfull.";
   public final static String ACCOUNT_NOT_FOUND = "Account not found.";
   public final static String ACCOUNT_DEACTIVATED = "Account deactivated.";
+
+  // Misc
+  public final static String THREAD_NAME = "postman-request-";
 }

@@ -24,11 +24,16 @@ public class UserController {
   @PostMapping(path = AppConstants.SIGNUP_URL)
   public ResponseEntity<Message> signup(@Valid @RequestBody SignupRequest signupRequest)
       throws SignupException {
-    return new ResponseEntity<>(userService.addUser(signupRequest), HttpStatus.CREATED);
+    Message verification = userService.addUser(signupRequest);
+    return new ResponseEntity<>(verification,
+        (verification.getStatus() == null) ? HttpStatus.CREATED : verification.getStatus());
   }
 
   @DeleteMapping(path = AppConstants.DEACTIVATE_URL)
   public ResponseEntity<Message> deactivate() {
-    return new ResponseEntity<>(userService.deactivateUser(), HttpStatus.OK);
+    Message deactivationStatus = userService.deactivateUser();
+    return new ResponseEntity<>(deactivationStatus,
+        (deactivationStatus.getStatus() == null) ? HttpStatus.NO_CONTENT
+            : deactivationStatus.getStatus());
   }
 }
