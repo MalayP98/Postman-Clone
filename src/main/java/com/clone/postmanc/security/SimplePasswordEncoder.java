@@ -63,7 +63,7 @@ public class SimplePasswordEncoder implements PasswordEncoder {
   public boolean matches(CharSequence rawPassword, String encodedPassword) {
     String password = rawPassword.toString();
     try {
-      password = encode(password);
+      password = encrypt(password);
       return (password.equals(encodedPassword));
     } catch (Exception e) {
       LOG.error("Cannot decrypt password.");
