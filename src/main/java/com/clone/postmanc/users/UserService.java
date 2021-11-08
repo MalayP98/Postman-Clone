@@ -6,13 +6,10 @@ import com.clone.postmanc.users.role.RoleRepository;
 import com.clone.postmanc.utils.AppConstants;
 import com.clone.postmanc.utils.Helpers;
 import com.clone.postmanc.utils.Message;
-import org.hibernate.boot.model.source.internal.hbm.Helper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,7 +32,7 @@ public class UserService implements UserDetailsService {
     return (UserDetails) userRepository.findByUsername(username);
   }
 
-  @Transactional(rollbackFor = SignupException.class)
+  @Transactional
   public Message addUser(SignupRequest signupRequest) throws SignupException {
     Message verification = verifyUser(signupRequest);
     if (!Objects.nonNull(verification)) {

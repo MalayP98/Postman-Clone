@@ -1,4 +1,4 @@
-package com.clone.postmanc.request;
+package com.clone.postmanc.exchange.request;
 
 import java.util.Map;
 import com.clone.postmanc.authentication.AuthType;

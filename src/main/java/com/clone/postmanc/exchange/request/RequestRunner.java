@@ -1,6 +1,8 @@
-package com.clone.postmanc.request;
+package com.clone.postmanc.exchange.request;
 
+import java.util.Map;
 import javax.el.MethodNotFoundException;
+import com.clone.postmanc.exchange.response.Response;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -11,12 +13,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class RequestRunner {
 
-  public void run(ImmutableRequest request) throws UnirestException {
+  public Response run(ImmutableRequest request) throws UnirestException {
+    Unirest.setTimeouts(0, 0);
     HttpRequest httpRequest = getRequestByMethod(request.getMethod(), request.getEndpoint());
+    long startTime = System.currentTimeMillis();
     HttpResponse<JsonNode> response =
         httpRequest.headers(request.getHeaders()).queryString(request.getQueryParam()).asJson();
-    System.out.println(response.getBody());
-    System.out.println(response.getHeaders());
+    long endTime = System.currentTimeMillis();
+    return makeResponseObject(response, (int) (endTime - startTime));
+  }
+
+  @SuppressWarnings("unchecked")
+  private Response makeResponseObject(HttpResponse<JsonNode> response, int timeDiff) {
+    return new Response(response.getStatus(), (Map) response.getHeaders(),
+        response.getBody().toString(), timeDiff);
   }
 
   private HttpRequest getRequestByMethod(RequestMethod method, String endpoint) {

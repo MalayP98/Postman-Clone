@@ -42,6 +42,7 @@ public final class AppConstants {
   public static final String SPACE = " ";
   public static final String QUESTION_MARK = "?";
   public static final String AMPERSAND = "&";
+  public static final String COMMA = ",";
 
   // list of URLs that can be accessed by anyone.
   public final static String[] PUBLIC_URLS = {API_URL + USER_URL + SIGNUP_URL};
