@@ -7,18 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import com.clone.postmanc.exchange.request.MapToJsonConverter;
+import com.clone.postmanc.exchange.request.MapToStringVVConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Response {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @JsonIgnore
   private long id;
 
   private int statusCode;
 
-  @Convert(converter = MapToJsonConverter.class)
+  @Convert(converter = MapToStringVVConverter.class)
   @Column(columnDefinition = "text")
   private Map<String, Object> headers;
 
@@ -27,6 +29,7 @@ public class Response {
 
   private int timeDiff;
 
+  @JsonIgnore
   private long requestId;
 
   public Response() {

@@ -27,6 +27,11 @@ public class RequestService {
   @Autowired
   private ResponseService responseService;
 
+  /**
+   * Main thread is reponsible for running the API, the child thread is responsible for saving
+   * request and response. Both the tasks are performed simulteneoulsy so that saving the data has
+   * no effect on time that it takes to run the request.
+   */
   public Response runRequest(IncomingRequest incomingRequest)
       throws JSONException, NotFoundException, UnirestException {
     incomingRequest.setUserId(Helpers.getPrincipal().getId());
@@ -50,6 +55,14 @@ public class RequestService {
     return requestRunner.run(request);
   }
 
+  /**
+   * @param keepDuplicate, If set to true then Request is saved even if it is already present in the
+   *                       database. If set to false then it is checked that wether the object is
+   *                       already present in the database or not and is saved only if the object is
+   *                       not present. If single instance is present of the object then that object
+   *                       is updated. If more that one instance is present then
+   *                       DuplicateElementException is thrown.
+   */
   public Request saveRequest(Request request, boolean keepDuplicate) throws Exception {
     List<Request> requests =
         requestRepositiory.findByEndpointAndUserId(request.getEndpoint(), request.getUserId());

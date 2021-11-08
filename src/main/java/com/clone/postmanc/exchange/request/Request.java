@@ -1,10 +1,13 @@
 package com.clone.postmanc.exchange.request;
 
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import com.clone.postmanc.authentication.AuthenticationDelegator;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.json.JSONException;
 import org.springframework.lang.NonNull;
 import javassist.NotFoundException;
@@ -18,6 +21,12 @@ public class Request extends ImmutableRequest {
 
   @NonNull
   private long userId;
+
+  @CreationTimestamp
+  private LocalDateTime creation;
+
+  @UpdateTimestamp
+  private LocalDateTime update;
 
   public Request() {
 
@@ -50,9 +59,19 @@ public class Request extends ImmutableRequest {
     return userId;
   }
 
-  @Override
-  public String toString() {
-    return "Request [authroization=" + authentication + ", body=" + body + ", endpoint=" + endpoint
-        + ", headers=" + headers + ", id=" + id + ", userId=" + userId + "]";
+  public LocalDateTime getCreation() {
+    return creation;
+  }
+
+  public void setCreation(LocalDateTime creation) {
+    this.creation = creation;
+  }
+
+  public LocalDateTime getUpdate() {
+    return update;
+  }
+
+  public void setUpdate(LocalDateTime update) {
+    this.update = update;
   }
 }

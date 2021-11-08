@@ -6,7 +6,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class MapToJsonConverter implements AttributeConverter<Map<String, Object>, String> {
+// VV stands for vice-versa.
+public class MapToStringVVConverter implements AttributeConverter<Map<String, Object>, String> {
 
   @Autowired
   private ObjectMapper objectMapper;

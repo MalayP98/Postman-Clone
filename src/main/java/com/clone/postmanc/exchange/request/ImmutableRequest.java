@@ -3,13 +3,20 @@ package com.clone.postmanc.exchange.request;
 import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import org.springframework.lang.NonNull;
 
+/**
+ * The only way to create its object it through sending a request object. This class contains only
+ * the essential fields required to call an API. These cannot be set i.e no setter is provided.
+ */
 @MappedSuperclass
 public class ImmutableRequest {
 
   @NonNull
+  @Enumerated(EnumType.STRING)
   protected RequestMethod method;
 
   @NonNull
@@ -17,11 +24,11 @@ public class ImmutableRequest {
 
   protected String authentication;
 
-  @Convert(converter = MapToJsonConverter.class)
+  @Convert(converter = MapToStringVVConverter.class)
   @Column(columnDefinition = "text")
   protected Map<String, String> headers;
 
-  @Convert(converter = MapToJsonConverter.class)
+  @Convert(converter = MapToStringVVConverter.class)
   protected Map<String, Object> queryParam;
 
   @Column(columnDefinition = "text")

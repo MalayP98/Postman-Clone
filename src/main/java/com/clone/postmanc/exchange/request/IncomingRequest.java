@@ -119,11 +119,4 @@ public class IncomingRequest {
   public void setUserId(Long userId) {
     this.userId = userId;
   }
-
-  @Override
-  public String toString() {
-    return "IncomingRequest [authType=" + authType + ", authenticationDetail="
-        + authenticationDetail + ", authroization=" + authroization + ", body=" + body
-        + ", bodyType=" + bodyType + ", endpoint=" + endpoint + ", headers=" + headers + "]";
-  }
 }
