@@ -1,6 +1,7 @@
-package com.clone.postmanc.request;
+package com.clone.postmanc.exchange.request;
 
 import java.util.Map;
+import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 import org.springframework.lang.NonNull;
@@ -17,11 +18,13 @@ public class ImmutableRequest {
   protected String authentication;
 
   @Convert(converter = MapToJsonConverter.class)
+  @Column(columnDefinition = "text")
   protected Map<String, String> headers;
 
   @Convert(converter = MapToJsonConverter.class)
   protected Map<String, Object> queryParam;
 
+  @Column(columnDefinition = "text")
   protected String body;
 
   public ImmutableRequest() {

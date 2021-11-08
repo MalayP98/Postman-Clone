@@ -1,5 +1,6 @@
-package com.clone.postmanc.request;
+package com.clone.postmanc.exchange.request;
 
+import com.clone.postmanc.exchange.response.Response;
 import com.clone.postmanc.utils.AppConstants;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONException;
@@ -18,10 +19,9 @@ public class RequestController {
   private RequestService requestService;
 
   @PostMapping(value = AppConstants.SEND)
-  public IncomingRequest send(@RequestBody IncomingRequest incomingRequest)
+  public Response send(@RequestBody IncomingRequest incomingRequest)
       throws JSONException, NotFoundException, UnirestException {
-    requestService.runRequest(incomingRequest);
-    return incomingRequest;
+    return requestService.runRequest(incomingRequest);
   }
 
 }

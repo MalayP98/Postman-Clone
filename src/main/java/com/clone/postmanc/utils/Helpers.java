@@ -17,6 +17,7 @@ public class Helpers {
     return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
 
+  // Reference to generics is not given as value type can be either String or Object.
   public static Map<String, Object> stringToMap(String str, String keyValueSeprator,
       String elementSeprator) {
     Map<String, Object> result = new HashMap<>();
@@ -26,4 +27,6 @@ public class Helpers {
     }
     return result;
   }
+
+
 }
