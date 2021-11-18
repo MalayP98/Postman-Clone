@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import com.clone.postmanc.users.role.Role;
+import org.springframework.core.env.Environment;
 
 public final class AppConstants {
 
@@ -56,4 +57,7 @@ public final class AppConstants {
 
   // Misc
   public final static String THREAD_NAME = "postman-request-";
+
+  // temp folder location
+  public final static String TEMP_FOLDER_LOC = "/Users/malaypandey/Work/temp";
 }
