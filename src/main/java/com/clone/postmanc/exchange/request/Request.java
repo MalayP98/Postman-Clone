@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import com.clone.postmanc.authentication.AuthenticationDelegator;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.json.JSONException;
@@ -33,13 +32,7 @@ public class Request extends ImmutableRequest {
   }
 
   public Request(IncomingRequest incomingRequest) throws JSONException, NotFoundException {
-    this.method = incomingRequest.getMethod();
-    this.endpoint = incomingRequest.getEndpoint();
-    this.authentication = (new AuthenticationDelegator(incomingRequest.getAuthType(),
-        incomingRequest.getAuthenticationDetail())).getAuthentication();
-    this.headers = incomingRequest.getHeaders();
-    this.queryParam = incomingRequest.getQueryParam();
-    this.body = incomingRequest.getBody();
+    super(incomingRequest);
     this.userId = incomingRequest.getUserId();
   }
 

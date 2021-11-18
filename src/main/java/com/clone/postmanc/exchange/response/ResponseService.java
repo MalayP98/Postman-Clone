@@ -22,7 +22,7 @@ public class ResponseService {
         return responseRepository.save(response);
       } else if (responses.size() == 1) {
         response.setId(responses.get(0).getId());
-        responseRepository.save(response);
+        return responseRepository.save(response);
       }
       throw new DuplicateElementException("Multiple response cannot exist for same request.");
     }

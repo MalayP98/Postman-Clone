@@ -1,11 +1,21 @@
 package com.clone.postmanc.utils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import com.clone.postmanc.users.User;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+@Component
 public class Helpers {
 
   public static String getRondomString() {
@@ -28,5 +38,26 @@ public class Helpers {
     return result;
   }
 
+  public static void writeToFile(byte[] bytes, Path path) {
+    try (OutputStream outputStream = Files.newOutputStream(path)) {
+      outputStream.write(bytes);
+    } catch (IOException ioe) {
+      ioe.printStackTrace();
+    }
+  }
 
+  public static void cleanTempDirectory() throws IOException {
+    FileUtils.cleanDirectory(new File(AppConstants.TEMP_FOLDER_LOC));
+  }
+
+  public static File getFile(MultipartFile multipartFile)
+      throws IllegalStateException, IOException {
+    File file = new File(AppConstants.TEMP_FOLDER_LOC + multipartFile.getOriginalFilename());
+    file.createNewFile();
+    multipartFile.getBytes();
+    FileOutputStream fos = new FileOutputStream(file);
+    fos.write(multipartFile.getBytes());
+    fos.close();
+    return file;
+  }
 }

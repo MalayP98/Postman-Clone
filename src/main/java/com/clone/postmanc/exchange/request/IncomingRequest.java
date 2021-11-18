@@ -27,9 +27,11 @@ public class IncomingRequest {
   @JsonIgnore
   private Map<String, Object> queryParam;
 
-  private String body;
+  private Payload payload;
 
   private JsonNode authenticationDetail;
+
+  Boolean authAtHeader;
 
   private Long userId;
 
@@ -88,12 +90,12 @@ public class IncomingRequest {
     this.queryParam = queryParam;
   }
 
-  public String getBody() {
-    return body;
+  public Payload getPayload() {
+    return payload;
   }
 
-  public void setBody(String body) {
-    this.body = body;
+  public void setPayload(Payload payload) {
+    this.payload = payload;
   }
 
   public JsonNode getAuthenticationDetail() {
@@ -118,5 +120,13 @@ public class IncomingRequest {
 
   public void setUserId(Long userId) {
     this.userId = userId;
+  }
+
+  public Boolean getAuthAtHeader() {
+    return authAtHeader;
+  }
+
+  public void setAuthAtHeader(Boolean authAtHeader) {
+    this.authAtHeader = authAtHeader;
   }
 }
